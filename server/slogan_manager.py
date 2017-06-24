@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 import asyncpg
 
-from const import connection_url
+from .const import connection_url
 
 
 class SloganManager(object):

@@ -5,7 +5,7 @@ import sqlite3
 from tempfile import NamedTemporaryFile
 from unittest import TestCase
 
-from .slogan_manager import SloganManager
+from server.slogan_manager import SloganManager
 
 
 class SloganManagerTest(TestCase):

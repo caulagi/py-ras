@@ -17,7 +17,7 @@ $ docker run \
 $ python3 -m venv ~/.venv/ras
 $ source ~/.venv/ras/bin/activate
 
-$ python server.py
+$ python -m server
 ```
 
 ## Tests

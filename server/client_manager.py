@@ -4,7 +4,7 @@ The client manager manages data in client table
 import asyncpg
 from datetime import datetime
 
-from const import connection_url
+from .const import connection_url
 
 
 class ClientManager(object):
