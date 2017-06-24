@@ -6,11 +6,11 @@ description. The recommended python version is **3.6.x**.
 ## Running locally
 
 ```bash
-$ docker volume create rent-slogan
+$ docker volume create rent_slogan
 $ docker run \
     -v rent-slogan:/var/lib/postgresql/data \
     -e POSTGRES_PASSWORD=1234 \
-    -e POSTGRES_DB=rent-slogan \
+    -e POSTGRES_DB=rent_slogan \
     -p 5432:5432 \
     -d postgres:9.6-alpine
 
