@@ -23,6 +23,9 @@ class SloganManagerTest(TestCase):
         cls.sm = SloganManager()
         cls.loop = asyncio.get_event_loop()
 
+    def test_debug(self):
+        assert connection_url() == ''
+
     async def _test_init(self):
         await self.sm.init()
         conn = await asyncpg.connect(connection_url())
