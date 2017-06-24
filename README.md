@@ -24,4 +24,4 @@ $ python server.py
 
 TODO
 
-[1] https://github.com/caulagi/rent-a-slogan/blob/master/README.md
+[1]: https://github.com/caulagi/rent-a-slogan/blob/master/README.md
