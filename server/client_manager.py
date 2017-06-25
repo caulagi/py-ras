@@ -1,8 +1,9 @@
 '''
 The client manager manages data in client table
 '''
-import asyncpg
 from datetime import datetime
+
+import asyncpg
 
 from .const import connection_url
 
