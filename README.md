@@ -1,5 +1,7 @@
 # rent-a-slogan
 
+[![Build Status](https://travis-ci.org/caulagi/py-ras.svg?branch=master)](https://travis-ci.org/caulagi/py-ras)
+
 A Python solution using uvloop and asyncpg. See [README][1] for problem
 description. The recommended python version is **3.6.x**.
 
@@ -22,6 +24,9 @@ $ python -m server
 
 ## Tests
 
-TODO
+```bash
+py.test
+```
+
 
 [1]: https://github.com/caulagi/rent-a-slogan/blob/master/README.md
