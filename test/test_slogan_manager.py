@@ -23,10 +23,6 @@ class SloganManagerTest(TestCase):
         cls.sm = SloganManager()
         cls.loop = asyncio.get_event_loop()
 
-        async def _init_tables(cls):
-            await cls.sm.init()
-        cls.loop.run_until_complete(_init_tables(cls))
-
     def test_init(self):
         async def _test_init(self):
             conn = await asyncpg.connect(connection_url())
