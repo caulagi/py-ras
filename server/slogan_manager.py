@@ -97,10 +97,8 @@ class SloganManager(object):
         return (True, row)
 
     async def list(self):
-        results = []
         conn = await asyncpg.connect(connection_url())
-        raw = await conn.fetch('select title, rented_on, rented_by from slogan')
-        for row in raw:
-            status = 'not rented' if not row[1] else 'rented by {}'.format(row[2])
-            results.append('{} - {}'.format(row[0], status))
-        return results
+        num_slogans = await conn.fetchval('select count(*) from slogan')
+        num_rents = await conn.fetchval('select count(*) from slogan where rented_on is not null')
+        num_clients = await conn.fetchval('select count(*) from client')
+        return (True, (num_slogans, num_rents, num_clients))

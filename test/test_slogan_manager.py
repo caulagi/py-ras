@@ -72,9 +72,12 @@ class SloganManagerTest(TestCase):
     #         status, _ = slogan_manager.rent()
     #         assert status is False
 
-    # def test_list(self):
-    #     with NamedTemporaryFile() as test_db:
-    #         slogan_manager = SloganManager(test_db.name)
-    #         slogan_manager.create('test 1')
-    #         slogan_manager.create('test 2')
-    #         assert len(slogan_manager.list()) == 2
+    def test_list(self):
+        async def _test_list(self):
+            title = self.random_title()
+            await self.sm.create(title)
+            return await self.sm.list()
+        status, res = self.loop.run_until_complete(_test_list(self))
+        assert status is True
+        assert res[0] > 0
+        assert len(res) == 3

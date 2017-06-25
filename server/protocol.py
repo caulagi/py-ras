@@ -52,17 +52,14 @@ class SloganProtocol(asyncio.Protocol):
         await self.client_manager.deactivate(self.identifier)
 
     async def status(self):
-        res = await self.slogan_manager.list()
-        self.transport.write('Slogans: {}'.format(CLRF).encode())
-        self.transport.write(CLRF.join(res).encode())
-        self.transport.write(CLRF.encode())
-        asyncio.ensure_future(self.status_clients())
-
-    async def status_clients(self):
-        res = await self.client_manager.list()
-        self.transport.write('Clients: {}'.format(CLRF).encode())
-        self.transport.write(CLRF.join(res).encode())
-        self.transport.write(CLRF.encode())
+        status, res = await self.slogan_manager.list()
+        if not status:
+            self.transport.write('error getting details {}'.format(CLRF).encode())
+            return
+        num_slogans, num_rents, num_clients = res
+        self.transport.write('Number of slogans: {}{}'.format(num_slogans, CLRF).encode())
+        self.transport.write('Number of rents: {}{}'.format(num_rents, CLRF).encode())
+        self.transport.write('Number of clients: {}{}'.format(num_clients, CLRF).encode())
 
     async def rent(self):
         status, res = await self.slogan_manager.rent(self.identifier)
