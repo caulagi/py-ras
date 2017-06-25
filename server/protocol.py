@@ -7,12 +7,11 @@ rent-a-slogan socket server
     * allows clients to rent one slogan for 15 seconds
 '''
 import asyncio
-import random
-import string
 from functools import partial
 
 from .client_manager import ClientManager
 from .slogan_manager import SloganManager
+from .util import random_string
 
 CLRF = '\r\n'
 
@@ -20,7 +19,7 @@ CLRF = '\r\n'
 class SloganProtocol(asyncio.Protocol):
     def __init__(self):
         self.loop = asyncio.get_event_loop()
-        self.identifier = ''.join(random.choice(string.ascii_lowercase) for i in range(8))  # nosec
+        self.identifier = random_string()
 
     def connection_made(self, transport):
         print('new connection: {}'.format(transport.get_extra_info('socket')))
@@ -56,9 +55,16 @@ class SloganProtocol(asyncio.Protocol):
         if not status:
             self.transport.write('error getting details {}'.format(CLRF).encode())
             return
-        num_slogans, num_rents, num_clients = res
+        num_slogans, num_rents = res
         self.transport.write('Number of slogans: {}{}'.format(num_slogans, CLRF).encode())
         self.transport.write('Number of rents: {}{}'.format(num_rents, CLRF).encode())
+        await self.status_clients()
+
+    async def status_clients(self):
+        status, num_clients = await self.client_manager.count()
+        if not status:
+            self.transport.write('error getting client details {}'.format(CLRF).encode())
+            return
         self.transport.write('Number of clients: {}{}'.format(num_clients, CLRF).encode())
 
     async def rent(self):

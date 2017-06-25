@@ -2,21 +2,16 @@
 Tests for interaction with db for slogans
 """
 import asyncio
-import random
-import string
 from unittest import TestCase
 
 import asyncpg
 
 from server.const import connection_url
 from server.slogan_manager import SloganManager
+from server.util import random_string
 
 
 class SloganManagerTest(TestCase):
-
-    @staticmethod
-    def random_title():
-        return ''.join(random.choice(string.ascii_lowercase) for i in range(20))  # nosec
 
     @classmethod
     def setUpClass(cls):
@@ -38,7 +33,7 @@ class SloganManagerTest(TestCase):
 
     def test_create(self):
         async def _test_create(self):
-            title = self.random_title()
+            title = random_string()
             ok, res = await self.sm.create(title)
             assert ok is True
             assert res == title
@@ -46,7 +41,7 @@ class SloganManagerTest(TestCase):
 
     def test_create_unique_constraint(self):
         async def _test_create_unique_constraint(self):
-            title = self.random_title()
+            title = random_string()
             await self.sm.create(title)
             ok, _ = await self.sm.create(title)
             assert ok is False
@@ -54,7 +49,7 @@ class SloganManagerTest(TestCase):
 
     def test_rent_when_available(self):
         async def _test_rent_when_available(self):
-            title = self.random_title()
+            title = random_string()
             await self.sm.create(title)
             status, _ = await self.sm.rent(rented_by=title)
             assert status is True
@@ -70,10 +65,10 @@ class SloganManagerTest(TestCase):
 
     def test_list(self):
         async def _test_list(self):
-            title = self.random_title()
+            title = random_string()
             await self.sm.create(title)
             return await self.sm.list()
         status, res = self.loop.run_until_complete(_test_list(self))
         assert status is True
         assert res[0] > 0
-        assert len(res) == 3
+        assert len(res) == 2

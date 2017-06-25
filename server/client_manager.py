@@ -37,8 +37,8 @@ class ClientManager(object):
         conn = await asyncpg.connect(connection_url())
         await conn.execute('UPDATE client SET active = FALSE')
 
-    async def list(self):
+    async def count(self):
         'Return count of active clients'
         conn = await asyncpg.connect(connection_url())
-        res = await conn.fetch('select fd, identifier from client where active = TRUE')
-        return ['{}:{}'.format(p['fd'], p['identifier']) for p in res]
+        c = await conn.fetchval('select count(*) from client where active = TRUE')
+        return (True, c)
