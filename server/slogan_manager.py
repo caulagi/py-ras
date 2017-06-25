@@ -3,10 +3,10 @@ The slogan manager is the interface between python
 and sqlite for the slogan table
 '''
 import hashlib
-import pytz
 from datetime import datetime, timedelta
 
 import asyncpg
+import pytz
 
 from .const import connection_url
 

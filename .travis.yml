@@ -10,4 +10,9 @@ python:
   - '3.5'
   - '3.6'
 install: 'pip install -r test/requirements.txt'
-script: py.test
+script:
+  - py.test --cov-report xml --cov .
+  - flake8
+  - isort --check-only --recursive
+after_success:
+  - python-codacy-coverage -r coverage.xml
