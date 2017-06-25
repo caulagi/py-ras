@@ -4,6 +4,7 @@ The client manager manages data in client table
 from datetime import datetime
 
 import asyncpg
+import pytz
 
 from .const import connection_url
 
@@ -27,7 +28,7 @@ class ClientManager(object):
         conn = await asyncpg.connect(connection_url())
         await conn.execute(
             'INSERT INTO client (fd, identifier, connected_on) values ($1, $2, $3)',
-            fd, identifier, datetime.now())
+            fd, identifier, datetime.utcnow().replace(tzinfo=pytz.utc))
 
     async def deactivate(self, identifier):
         conn = await asyncpg.connect(connection_url())
