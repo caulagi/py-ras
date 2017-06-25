@@ -20,7 +20,7 @@ CLRF = '\r\n'
 class SloganProtocol(asyncio.Protocol):
     def __init__(self):
         self.loop = asyncio.get_event_loop()
-        self.identifier = ''.join(random.choice(string.ascii_lowercase) for i in range(8))
+        self.identifier = ''.join(random.choice(string.ascii_lowercase) for i in range(8))  # nosec
 
     def connection_made(self, transport):
         print('new connection: {}'.format(transport.get_extra_info('socket')))

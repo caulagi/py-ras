@@ -37,7 +37,7 @@ class SloganManager(object):
 
     @staticmethod
     def get_md5(title):
-        h = hashlib.md5()
+        h = hashlib.md5()  # nosec
         h.update(title.encode('utf-8'))
         return h.hexdigest()
 

@@ -16,7 +16,7 @@ class SloganManagerTest(TestCase):
 
     @staticmethod
     def random_title():
-        return ''.join(random.choice(string.ascii_lowercase) for i in range(20))
+        return ''.join(random.choice(string.ascii_lowercase) for i in range(20))  # nosec
 
     @classmethod
     def setUpClass(cls):
@@ -36,6 +36,7 @@ class SloganManagerTest(TestCase):
             assert row['table_name'] == 'slogan'
         self.loop.run_until_complete(_test_init(self))
 
+    # pylint: disable=R0201
     def test_md5(self):
         assert SloganManager.get_md5('test') == '098f6bcd4621d373cade4e832627b4f6'
 
