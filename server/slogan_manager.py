@@ -3,6 +3,7 @@ The slogan manager is the interface between python
 and sqlite for the slogan table
 '''
 import hashlib
+import pytz
 from datetime import datetime, timedelta
 
 import asyncpg
@@ -66,13 +67,13 @@ class SloganManager(object):
         async with conn.transaction():
             await conn.execute(
                 'UPDATE slogan SET rented_on = NULL, rented_by = NULL WHERE rented_on < $1',
-                datetime.now() - timedelta(seconds=self.EXPIRE_AFTER_SECONDS))
+                datetime.utcnow().replace(tzinfo=pytz.utc) - timedelta(seconds=self.EXPIRE_AFTER_SECONDS))
 
     async def _find_rent(self, conn, rented_by):
         async with conn.transaction():
             await conn.execute(
                 'UPDATE slogan SET rented_on = $1, rented_by = $2 WHERE id = (SELECT id FROM slogan WHERE rented_on IS NULL LIMIT 1)',
-                datetime.now(), rented_by)
+                datetime.utcnow().replace(tzinfo=pytz.utc), rented_by)
             return await conn.fetchrow('SELECT id, title FROM slogan WHERE rented_by = $1', rented_by)
 
     async def _allow_renting(self, conn, rented_by):

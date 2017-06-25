@@ -1,7 +1,13 @@
 language: python
+dist: trusty
+addons:
+  postgresql: '9.6'
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database slogan_test;' -U postgres
 python:
-  - "3.5"
-  - "3.6"
-  - "3.7-dev" # 3.7 development branch
-install: "pip install -r test/requirements.txt"
+  - '3.5'
+  - '3.6'
+install: 'pip install -r test/requirements.txt'
 script: py.test
