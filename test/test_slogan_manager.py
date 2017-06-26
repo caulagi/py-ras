@@ -2,9 +2,9 @@
 Tests for interaction with db for slogans
 """
 import asyncio
-from unittest import TestCase
 
 import asyncpg
+from asynctest import TestCase, ignore_loop
 
 from server.const import connection_url
 from server.slogan_manager import SloganManager
@@ -28,6 +28,7 @@ class SloganManagerTest(TestCase):
         self.loop.run_until_complete(_test_init(self))
 
     # pylint: disable=R0201
+    @ignore_loop
     def test_md5(self):
         assert SloganManager.get_md5('test') == '098f6bcd4621d373cade4e832627b4f6'
 

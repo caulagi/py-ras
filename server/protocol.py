@@ -20,18 +20,19 @@ class SloganProtocol(asyncio.Protocol):
     def __init__(self):
         self.loop = asyncio.get_event_loop()
         self.identifier = random_string()
+        self.slogan_manager = SloganManager()
+        self.client_manager = ClientManager()
 
     def connection_made(self, transport):
         print('new connection: {}'.format(transport.get_extra_info('socket')))
         self.transport = transport
-        self.slogan_manager = SloganManager()
-        self.client_manager = ClientManager()
         asyncio.ensure_future(self.add_client())
 
     def connection_lost(self, exc):
         print('closed connection: {}'.format(self.transport.get_extra_info('socket')))
         self.transport = None
         self.slogan_manager = None
+        self.client_manager = None
         asyncio.ensure_future(self.deactivate_client())
 
     def data_received(self, data):
@@ -59,6 +60,7 @@ class SloganProtocol(asyncio.Protocol):
         self.transport.write('Number of slogans: {}{}'.format(num_slogans, CLRF).encode())
         self.transport.write('Number of rents: {}{}'.format(num_rents, CLRF).encode())
         await self.status_clients()
+        return (num_slogans, num_rents)
 
     async def status_clients(self):
         status, num_clients = await self.client_manager.count()
