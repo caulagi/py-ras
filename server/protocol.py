@@ -78,6 +78,7 @@ class SloganProtocol(asyncio.Protocol):
         self.transport.write(CLRF.encode())
         self.loop.call_later(self.slogan_manager.EXPIRE_AFTER_SECONDS,
                              partial(self.expire_rent, res['id']))
+        return status
 
     def expire_rent(self, slogan_id):
         asyncio.ensure_future(self.expire_rent_async(slogan_id))
@@ -91,6 +92,7 @@ class SloganProtocol(asyncio.Protocol):
         _, res = await self.slogan_manager.create(slogan)
         self.transport.write(res.encode())
         self.transport.write(CLRF.encode())
+        return res
 
     def run_cmd(self, cmd, slogan=None):
         cmd = cmd.lower()
