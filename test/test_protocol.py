@@ -1,9 +1,9 @@
 """
 Tests for interaction with db for slogans
 """
-import asynctest
-
 from socket import socketpair
+
+import asynctest
 
 from server.protocol import SloganProtocol
 
