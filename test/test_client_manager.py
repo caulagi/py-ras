@@ -2,7 +2,8 @@
 Tests for interaction with db for slogans
 """
 import asyncio
-from unittest import TestCase
+
+from asynctest import TestCase
 
 from server.client_manager import ClientManager
 from server.util import random_string
