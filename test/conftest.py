@@ -6,8 +6,8 @@ import asyncpg
 
 def pytest_configure():
     # environment should be set before importing
-    from server.const import PG_DATABASE, PG_PASSWORD, connection_url
-    os.environ['PG_DATABASE'] = PG_DATABASE
+    from server.const import PG_PASSWORD, connection_url
+    os.environ['PG_DATABASE'] = 'slogan_test'
     os.environ['PG_PASSWORD'] = PG_PASSWORD
 
     from server.client_manager import ClientManager
@@ -17,7 +17,7 @@ def pytest_configure():
         await SloganManager().init()
         await ClientManager().init()
         conn = await asyncpg.connect(connection_url())
-        await conn.execute('DROP DATABASE IF EXISTS slogan_test')
+        await conn.execute('DROP DATABASE IF EXISTS %s' % os.environ['PG_DATABASE'])
         await conn.execute('CREATE DATABASE slogan_test')
 
     loop = asyncio.get_event_loop()
