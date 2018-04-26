@@ -19,8 +19,39 @@ $ docker run \
 
 $ python3 -m venv ~/.venv/ras
 $ source ~/.venv/ras/bin/activate
+```
 
+#### Dependencies
+
+```bash
+# for just running the project
+$ pip install -r requirements.txt
+
+# for running tests and code quality checks
+$ pip install -r test/requirements.txt
+```
+
+#### Finally...
+
+```bash
 $ python -m server
+```
+
+```bash
+$ nc localhost 25001
+status
+Total number of slogans: 10
+Number of rents: 2
+Number of connected clients: 3
+
+add::Just do it
+Just do it
+add::Just do it
+error: slogan already exists
+
+rent
+OK: id:4 title:t1
+Slogan id 4 has expired
 ```
 
 ## Tests
