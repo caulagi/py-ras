@@ -13,11 +13,11 @@ def pytest_configure():
     from server.slogan_manager import SloganManager
 
     async def init_db():
-        await SloganManager().init()
-        await ClientManager().init()
         conn = await asyncpg.connect(connection_url())
         await conn.execute('DROP DATABASE IF EXISTS %s' % os.environ['PG_DATABASE'])
         await conn.execute('CREATE DATABASE slogan_test')
+        await SloganManager().init()
+        await ClientManager().init()
 
     loop = asyncio.get_event_loop()
     loop.run_until_complete(init_db())
