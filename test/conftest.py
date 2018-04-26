@@ -9,11 +9,11 @@ def pytest_configure():
     os.environ['PG_DATABASE'] = 'slogan_test'
 
     from server.client_manager import ClientManager
-    from server.const import connection_url
+    from server.const import PG_USERNAME, PG_PASSWORD
     from server.slogan_manager import SloganManager
 
     async def init_db():
-        conn = await asyncpg.connect(connection_url())
+        conn = await asyncpg.connect(user=PG_USERNAME, password=PG_PASSWORD)
         await conn.execute('DROP DATABASE IF EXISTS %s' % os.environ['PG_DATABASE'])
         await conn.execute('CREATE DATABASE slogan_test')
         await SloganManager().init()
