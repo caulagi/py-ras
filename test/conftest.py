@@ -6,11 +6,10 @@ import asyncpg
 
 def pytest_configure():
     # environment should be set before importing
-    from server.const import PG_PASSWORD, connection_url
     os.environ['PG_DATABASE'] = 'slogan_test'
-    os.environ['PG_PASSWORD'] = PG_PASSWORD
 
     from server.client_manager import ClientManager
+    from server.const import connection_url
     from server.slogan_manager import SloganManager
 
     async def init_db():
