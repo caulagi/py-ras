@@ -1,6 +1,13 @@
 language: python
+env:
+  global:
+    - PGPORT=5433
 addons:
-  postgresql: '10.3'
+  postgresql: 10
+  apt:
+    packages:
+      - postgresql-10
+      - postgresql-client-10
 python:
   - '3.5'
   - '3.6'
