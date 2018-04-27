@@ -1,11 +1,6 @@
 language: python
 addons:
-  postgresql: '10'
-  apt:
-    packages:
-      - postgresql-10
-services:
-  - postgresql
+  postgresql: '10.3'
 python:
   - '3.5'
   - '3.6'
