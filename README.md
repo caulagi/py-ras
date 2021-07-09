@@ -15,7 +15,7 @@ $ docker run \
     -e POSTGRES_PASSWORD=1234 \
     -e POSTGRES_DB=rent_slogan \
     -p 5432:5432 \
-    -d postgres:9.6-alpine
+    -d postgres:10.3-alpine
 
 $ python3 -m venv ~/.venv/ras
 $ source ~/.venv/ras/bin/activate
